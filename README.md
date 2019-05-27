@@ -14,6 +14,10 @@ Acesse o `config/database.js` e altere o segundo parametro na linha 19 para `mys
 
 Instale o mysql na aplicação com o comando `npm i --save mysql`
 
+---
+
+A pasta `app` serve para ter toda a lógica da aplicação
+
 ## Instalação de ferramentas
 
 ### E-mail
@@ -28,6 +32,7 @@ Configurações na pasta `start/app.js`
 
 ``` JavaScript
 const providers = [
+  ...
   '@adonisjs/mail/providers/MailProvider'
 ]
 ```
