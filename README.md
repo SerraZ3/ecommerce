@@ -218,6 +218,8 @@ const aceProviders = [
 
 ### Migrations
 
+O migration é baseado na biblioteca [knex.js](https://knexjs.org/). Em seu site é possivel ver a documentação que ajudará a montar uma tabela
+
 Para criar uma estrutura do banco de dados, o adonis, utiliza o comando de migration. Ele cria um arquivo com uma estrutura que facilita criar tabelas e relações entre elas no banco de dados
 
 O comando tem a seguinte estrutura:
