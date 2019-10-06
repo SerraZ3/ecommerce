@@ -9,12 +9,12 @@ class PasswordResetSchema extends Schema {
       table.increments()
       table.string('email').notNullable()
       table.string('token').notNullable()
-      table.dataTime('expires_at')
+      table.dateTime('expires_at')
       table.timestamps()
 
       table
         .foreign('email')
-        .references('enail')
+        .references('email')
         .inTable('users')
         .onDelete('cascade')
     })
