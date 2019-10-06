@@ -9,6 +9,7 @@ OrderHook.updateValues = async model => {
   model.total = model.$sideLoaded.subtotal - model.$sideLoaded.discount
 }
 
+//
 OrderHook.updateCollectionValues = async models => {
   for (let model of models) {
     model = await OrderHook.updateValues(model)
