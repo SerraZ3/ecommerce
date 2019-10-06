@@ -19,7 +19,7 @@ class CategoryController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async index({ request, response, view, pagination }) {
+  async index({ request, response, pagination }) {
     const title = request.input('title')
 
     const query = Category.query()

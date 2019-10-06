@@ -4,6 +4,8 @@
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 /** @typedef {import('@adonisjs/framework/src/View')} View */
 
+const Product = use('App/Models/Product')
+
 /**
  * Resourceful controller for interacting with products
  */
@@ -17,7 +19,20 @@ class ProductController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async index({ request, response, view }) {}
+  async index({ request, response, pagination }) {
+    const name = request.input('name')
+
+    const query = Product.query()
+
+    if (name) {
+      // LIKE  = Case sitive
+      // ILIKE = Not Case sitive
+      query.where('name', 'ILIKE', `%${name}%`)
+    }
+
+    const product = await query.paginate(pagination.page, pagination.limit)
+    return response.send(product)
+  }
 
   /**
    * Create/save a new product.
