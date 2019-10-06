@@ -48,7 +48,7 @@ class UserController {
     try {
       const userData = request.only([
         'name',
-        'username',
+        'surname',
         'email',
         'password',
         'image_id'
@@ -84,18 +84,18 @@ class UserController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async update({ params, request, response }) {
+  async update({ params: { id }, request, response }) {
     const user = await User.findOrFail(id)
     try {
-      const userData = request.only(
+      const userData = request.only([
         'name',
         'surname',
         'email',
         'password',
         'image_id'
-      )
+      ])
 
-      user.merge(userData)
+      user.merge({ ...userData })
 
       await user.save()
 
