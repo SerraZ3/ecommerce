@@ -97,8 +97,14 @@ class CategoryController {
    */
   async destroy({ params: { id }, request, response }) {
     const category = await Category.findOrFail(id)
-    await category.delete()
-    return response.status(204).send()
+    try {
+      await category.delete()
+      return response.status(204).send()
+    } catch (error) {
+      return response
+        .status(500)
+        .send({ message: 'Não foi possivel deletar essa categoria' })
+    }
   }
 }
 
