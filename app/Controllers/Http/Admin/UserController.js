@@ -32,20 +32,9 @@ class UserController {
       query.orWhere('email', 'ILIKE', `%${name}%`)
     }
 
-    const user = await query.paginate(pagination.page, pagination.limit)
-    return response.send(user)
+    const users = await query.paginate(pagination.page, pagination.limit)
+    return response.send(users)
   }
-
-  /**
-   * Render a form to be used for creating a new user.
-   * GET users/create
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async create({ request, response, view }) {}
 
   /**
    * Create/save a new user.
@@ -55,7 +44,23 @@ class UserController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async store({ request, response }) {}
+  async store({ request, response }) {
+    try {
+      const userData = request.only([
+        'name',
+        'username',
+        'email',
+        'password',
+        'image_id'
+      ])
+      const user = await User.create(userData)
+      return response.status(201).send(user)
+    } catch (error) {
+      return response
+        .status(400)
+        .send({ message: 'Não foi possivel criar este usuário no momento!' })
+    }
+  }
 
   /**
    * Display a single user.
@@ -66,18 +71,10 @@ class UserController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async show({ params, request, response, view }) {}
-
-  /**
-   * Render a form to update an existing user.
-   * GET users/:id/edit
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async edit({ params, request, response, view }) {}
+  async show({ params: { id }, response }) {
+    const user = await User.findOrFail(id)
+    return response.send(user)
+  }
 
   /**
    * Update user details.
@@ -87,7 +84,28 @@ class UserController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async update({ params, request, response }) {}
+  async update({ params, request, response }) {
+    const user = await User.findOrFail(id)
+    try {
+      const userData = request.only(
+        'name',
+        'surname',
+        'email',
+        'password',
+        'image_id'
+      )
+
+      user.merge(userData)
+
+      await user.save()
+
+      return response.send(user)
+    } catch (error) {
+      return response.status(400).send({
+        message: 'Não foi possivel atualizar esse usuário no momento!'
+      })
+    }
+  }
 
   /**
    * Delete a user with id.
@@ -97,7 +115,17 @@ class UserController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async destroy({ params, request, response }) {}
+  async destroy({ params: { id }, response }) {
+    const user = await User.findOrFail(id)
+    try {
+      await user.delete()
+      return response.status(204).send()
+    } catch (error) {
+      return response
+        .status(500)
+        .send({ message: 'Não foi possivel deletar esse usuário no momento' })
+    }
+  }
 }
 
 module.exports = UserController
