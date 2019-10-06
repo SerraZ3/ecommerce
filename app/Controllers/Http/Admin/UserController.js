@@ -95,7 +95,7 @@ class UserController {
         'image_id'
       ])
 
-      user.merge({ ...userData })
+      user.merge(userData)
 
       await user.save()
 
