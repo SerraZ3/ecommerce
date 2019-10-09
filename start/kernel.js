@@ -39,8 +39,8 @@ const globalMiddleware = [
 const namedMiddleware = {
   auth: 'Adonis/Middleware/Auth',
   guest: 'Adonis/Middleware/AllowGuestOnly',
-  is: 'Adonis/Acl/Is',
-  can: 'Adonis/Acl/Can'
+  is: 'Adonis/Acl/Is', // Verifica se ele é de tal categoria
+  can: 'Adonis/Acl/Can' // Verifica se o usuário está autenticado e se ele pode fazer tal ação
 }
 
 /*
