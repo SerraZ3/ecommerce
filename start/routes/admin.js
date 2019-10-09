@@ -58,7 +58,16 @@ Route.group(() => {
    * index/store/show/update/destroy
    *
    * */
-  Route.resource('users', 'UserController').apiOnly()
+  Route.resource('users', 'UserController')
+    .apiOnly()
+    .validator(
+      new Map([
+        [
+          [['users.store'], ['Admin/StoreUser']],
+          [['users.update'], ['Admin/StoreUser']]
+        ]
+      ])
+    )
 })
   .prefix('v1/admin')
   .namespace('Admin')

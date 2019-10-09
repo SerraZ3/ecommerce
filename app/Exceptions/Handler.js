@@ -2,7 +2,7 @@
 
 const BaseExceptionHandler = use('BaseExceptionHandler')
 // User parece com require. Quando a aplicação inicia ele pega todas classes e o que mais precisar para rodar e joga tudo em um objeto
-const Logger = user('Logger')
+const Logger = use('Logger')
 
 /**
  * This class handles all exceptions thrown during
@@ -23,7 +23,7 @@ class ExceptionHandler extends BaseExceptionHandler {
    * @return {void}
    */
   async handle(error, { request, response }) {
-    response.status(error.status).send(error.message)
+    response.status(error.status).send({ error: error.message })
   }
 
   /**
