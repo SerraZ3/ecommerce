@@ -92,6 +92,7 @@ class CouponController {
       await trx.commit()
       return response.status(201).send(coupon)
     } catch (error) {
+      await trx.rollback()
       return response
         .status(400)
         .send({ message: 'Não foi possivel cadastrar o cupom' })
@@ -169,6 +170,7 @@ class CouponController {
       await trx.commit()
       return response.status(200).send(coupon)
     } catch (error) {
+      await trx.rollback()
       return response
         .status(400)
         .send({ message: 'Não foi possivel atualizar o cupom' })

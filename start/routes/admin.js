@@ -30,6 +30,11 @@ Route.group(() => {
    * index/store/show/update/destroy
    *
    * */
+
+  // Se a rota for igual a resource do controller, deve ser add antes dele, pois se não irá falhar
+  Route.post('orders/:id/discount', 'OrderController.applyDiscount')
+  Route.delete('orders/:id/discount', 'OrderController.removeDiscount')
+
   Route.resource('orders', 'OrderController').apiOnly()
   /**
    *
