@@ -29,6 +29,9 @@ class ExceptionHandler extends BaseExceptionHandler {
       })
       return
     }
+    console.log(error)
+    console.log(request)
+
     response.status(error.status).send({ error: error.message })
   }
 

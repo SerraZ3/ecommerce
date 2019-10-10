@@ -133,11 +133,12 @@ class ImageController {
     const image = await Image.findOrFail(id)
     try {
       let filepath = Helpers.publicPath(`uploads/${image.path}`)
-      await fs.unlink(filepath, err => {
-        if (!err) await image.delete()
-      })
+      fs.unlinkSync(filepath)
+      await image.delete()
     } catch (error) {
-      response.status(400).send({message: "Nâo foi possivel deletar a imagem no momento"})
+      response
+        .status(400)
+        .send({ message: 'Nâo foi possivel deletar a imagem no momento' })
     }
   }
 }
